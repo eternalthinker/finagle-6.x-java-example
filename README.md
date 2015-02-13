@@ -14,12 +14,11 @@ curl -i -H "Content-Type: application/json" -d '{"pname": "p123"}' http://localh
 **3)** HelperServer responds to MainServer  
 **4)** MainServer, on receiving the async response from Helper, finally sends the JSON response to client  
   
+  
 ###TODO:
-- [x] Bug: Empty request sent to HelperServer  
+- [x] Bug: Empty request sent to HelperServer 
+  - Content is correctly sent on adding `Content Length` header in request  
 
-> Content is sent on adding `Content Length` header in request. But following warning is observed at MainServer  
-> *Feb 13, 2015 3:08:48 PM com.twitter.jvm.Jvm$$anonfun$sample$1$2 apply*  
-> *WARNING: Missed 1 collections for 0.PSScavenge due to sampling*  
-
-- [ ] Actual JSON parsing
+- [x] Actual JSON parsing 
+  - Used json-simple : https://code.google.com/p/json-simple/
 
