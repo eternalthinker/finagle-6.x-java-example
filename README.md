@@ -10,7 +10,7 @@ A finagle (6.6.2) example with two servers
 ```curl -H "Content-Type: application/json" -d '{"pname": "p123"}' http://localhost:9001```  
 2. On receiving the request, MainServer sends an async JSON request to HelperServer  
 3. HelperServer responds to MainServer  
-4. MainServer, on receiving the aync response from Helper, finally sends the JSON response to client  
+4. MainServer, on receiving the async response from Helper, finally sends the JSON response to client  
   
 ###TODO:
 - [ ] Bug: Empty request sent to HelperServer  
