@@ -35,9 +35,8 @@ public class HelperServer {
                 }*/
                 
                 HttpResponse res = new DefaultHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK);
-                res.setContent(ChannelBuffers.copiedBuffer("{\"vid_id\":100, \"price\":0.2}", CharsetUtil.UTF_8));
+                res.setContent(ChannelBuffers.copiedBuffer("{\"v_id\":100, \"price\":0.2}", CharsetUtil.UTF_8));
                 res.setHeader(HttpHeaders.Names.CONTENT_TYPE, "text/plain; charset=UTF-8");
-                //res.headers().add(HttpHeaders.Names.CONTENT_TYPE, "application/json; charset=UTF-8");
                 return Future.<HttpResponse> value(res);
             }
         };

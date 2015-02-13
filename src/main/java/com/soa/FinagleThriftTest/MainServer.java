@@ -29,7 +29,6 @@ public class MainServer {
             System.out.println("[Main] Sending response to main client");
             HttpResponse finalRes = new DefaultHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK);
             finalRes.setContent(ChannelBuffers.copiedBuffer("{\"bid\":" + resContent + "}", CharsetUtil.UTF_8));
-            //finalRes.headers().add(HttpHeaders.Names.CONTENT_TYPE, "application/json; charset=UTF-8");
             finalRes.setHeader(HttpHeaders.Names.CONTENT_TYPE, "application/json; charset=UTF-8");
             return Future.<HttpResponse> value(finalRes);
         }
