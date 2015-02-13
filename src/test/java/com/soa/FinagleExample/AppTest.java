@@ -1,4 +1,4 @@
-package com.soa.FinagleThriftTest;
+package com.soa.FinagleExample;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

@@ -1,4 +1,4 @@
-package com.soa.FinagleThriftTest;
+package com.soa.FinagleExample;
 
 import java.net.InetSocketAddress;
 import org.jboss.netty.buffer.ChannelBuffers;
