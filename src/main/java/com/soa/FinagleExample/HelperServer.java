@@ -23,8 +23,8 @@ public class HelperServer {
         Service<HttpRequest, HttpResponse> service = new Service<HttpRequest, HttpResponse>() {
             @Override
             public Future<HttpResponse> apply(HttpRequest request) {
-                String jsonContent = request.getContent().toString(CharsetUtil.UTF_8);
-                System.out.println("[Helper] Request received: " + jsonContent);
+                String reqContent = request.getContent().toString(CharsetUtil.UTF_8);
+                System.out.println("[Helper] Request received: " + reqContent);
                 
                 /*JSONParser jsonParser = new JSONParser();
                 JSONObject jsonObject;

@@ -1,6 +1,8 @@
 package com.soa.FinagleExample;
 
 import java.net.InetSocketAddress;
+
+import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.handler.codec.http.DefaultHttpRequest;
 import org.jboss.netty.handler.codec.http.DefaultHttpResponse;
@@ -39,8 +41,8 @@ public class MainServer {
         Service<HttpRequest, HttpResponse> service = new Service<HttpRequest, HttpResponse>() {
             @Override
             public Future<HttpResponse> apply(HttpRequest request) {
-                String jsonContent = request.getContent().toString(CharsetUtil.UTF_8);
-                System.out.println("[Main] Request received: " + jsonContent);
+                String reqContent = request.getContent().toString(CharsetUtil.UTF_8);
+                System.out.println("[Main] Request received: " + reqContent);
                 
                 // Initiate request to Helper
                 Service<HttpRequest, HttpResponse> client = ClientBuilder
@@ -49,8 +51,13 @@ public class MainServer {
                 
                 // TODO The request content is empty with below code; Need to fix this
                 HttpRequest helperRequest = new DefaultHttpRequest(HttpVersion.HTTP_1_1, HttpMethod.POST, "/");
-                helperRequest.setContent(request.getContent()); 
+                ChannelBuffer buffer;
+                buffer = request.getContent();
+                //buffer = ChannelBuffers.copiedBuffer("{\"dummy\":1}", CharsetUtil.UTF_8);
+                helperRequest.setContent(buffer);
                 helperRequest.setHeader(HttpHeaders.Names.CONTENT_TYPE, "application/json; charset=UTF-8");
+                helperRequest.setHeader(HttpHeaders.Names.CONTENT_LENGTH, buffer.readableBytes());
+                
                 Future<HttpResponse> helperResponse = client.apply(helperRequest);
                 client.close();
                 
