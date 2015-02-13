@@ -13,6 +13,10 @@ import org.jboss.netty.handler.codec.http.HttpResponse;
 import org.jboss.netty.handler.codec.http.HttpResponseStatus;
 import org.jboss.netty.handler.codec.http.HttpVersion;
 import org.jboss.netty.util.CharsetUtil;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 import com.twitter.finagle.Service;
 import com.twitter.finagle.builder.ClientBuilder;
 import com.twitter.finagle.builder.ServerBuilder;
@@ -22,6 +26,7 @@ import com.twitter.util.FutureEventListener;
 import com.twitter.util.Function;
 
 public class MainServer {
+    static JSONParser jsonParser = new JSONParser();
     
     static class GetBid extends Function<HttpResponse, Future<HttpResponse>> {
         public Future<HttpResponse> apply(HttpResponse res) {
@@ -43,6 +48,15 @@ public class MainServer {
             public Future<HttpResponse> apply(HttpRequest request) {
                 String reqContent = request.getContent().toString(CharsetUtil.UTF_8);
                 System.out.println("[Main] Request received: " + reqContent);
+                
+                // Parsing JSON request
+                JSONObject mainReq;
+                try {
+                    mainReq = (JSONObject) jsonParser.parse(reqContent);
+                    System.out.println("[Main] Param received - pname:" + mainReq.get("pname"));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 
                 // Initiate request to Helper
                 Service<HttpRequest, HttpResponse> client = ClientBuilder

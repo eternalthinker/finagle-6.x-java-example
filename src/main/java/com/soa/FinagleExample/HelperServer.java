@@ -9,6 +9,9 @@ import org.jboss.netty.handler.codec.http.HttpResponse;
 import org.jboss.netty.handler.codec.http.HttpResponseStatus;
 import org.jboss.netty.handler.codec.http.HttpVersion;
 import org.jboss.netty.util.CharsetUtil;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 /*import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;*/
@@ -19,6 +22,8 @@ import com.twitter.finagle.http.Http;
 import com.twitter.util.Future;
 
 public class HelperServer {
+    static JSONParser jsonParser = new JSONParser();
+    
     public static void main(String[] args) {
         Service<HttpRequest, HttpResponse> service = new Service<HttpRequest, HttpResponse>() {
             @Override
@@ -26,13 +31,14 @@ public class HelperServer {
                 String reqContent = request.getContent().toString(CharsetUtil.UTF_8);
                 System.out.println("[Helper] Request received: " + reqContent);
                 
-                /*JSONParser jsonParser = new JSONParser();
-                JSONObject jsonObject;
+                // Parsing JSON request
+                JSONObject jreq;
                 try {
-                    jsonObject = (JSONObject) jsonParser.parse(jsonContent);
+                    jreq = (JSONObject) jsonParser.parse(reqContent);
+                    System.out.println("[Main] Param received - pname:" + jreq.get("pname"));
                 } catch (ParseException e) {
                     e.printStackTrace();
-                }*/
+                }
                 
                 HttpResponse res = new DefaultHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK);
                 res.setContent(ChannelBuffers.copiedBuffer("{\"v_id\":100, \"price\":0.2}", CharsetUtil.UTF_8));
