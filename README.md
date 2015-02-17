@@ -1,5 +1,5 @@
 # finagle-6.x-java-example
-A finagle (6.6.2) example with two servers
+Miscellaneous multi-server Java examples with Finagle (6.6.2)
 
 ###Example 1:  
 **Client <-JSON-> HttpServer <-JSON-> HttpServer2**
