@@ -63,7 +63,6 @@ public class MainServer {
                         .safeBuild(ClientBuilder.get().codec(Http.get())
                                 .hosts("localhost:9004").hostConnectionLimit(1));
                 
-                // TODO The request content is empty with below code; Need to fix this
                 HttpRequest helperRequest = new DefaultHttpRequest(HttpVersion.HTTP_1_1, HttpMethod.POST, "/");
                 ChannelBuffer buffer;
                 buffer = request.getContent();
@@ -89,8 +88,6 @@ public class MainServer {
                 
                 Future <HttpResponse> mainResponse = helperResponse.flatMap(new GetBid());
                 return mainResponse;
-                
-                // return Future.<HttpResponse> value(res);
             }
         };
         
