@@ -1,7 +1,8 @@
 # finagle-6.x-java-example
 A finagle (6.6.2) example with two servers
 
-###Current design:
+###Example 1:  
+**Client <-JSON-> HttpServer <-JSON-> HttpServer2**
 
 *MainServer : port 9001*  
 *HelperServer : port 9004*
@@ -14,11 +15,15 @@ curl -i -H "Content-Type: application/json" -d '{"pname": "p123"}' http://localh
 **3)** HelperServer responds to MainServer  
 **4)** MainServer, on receiving the async response from Helper, finally sends the JSON response to client  
   
-  
-###TODO:
-- [x] Bug: Empty request sent to HelperServer 
-  - Content is correctly sent on adding `Content Length` header in request  
+###Example 2: 
+**Client <-JSON-> HttpServer <-JSON-> Http/Redis-Server <-REDIS-> Redis-Cache**
 
-- [x] Actual JSON parsing 
-  - Used json-simple : https://code.google.com/p/json-simple/
+*CookieServer : port 8000*  
+*RedisServer : port 8002*
+
+**1)** Request sent from client. This can be a curl request, but a browser will give access to an interface and cookie storage.  
+**2)** On receiving the request, CookieServer analyzes/sets the cookie and retrive any stored data from RedisServer  
+**3)** RedisServer queries the Redis instance running on port `7000` asynchronously  
+**4)** Upon retrieving info from Redis Cache, the RedisServer responds to CookieServer in JSON  
+**5)** CookieServer, on receiving the async response from Helper, finally sends the JSON response to client. In browser, the interface is changed according to the updated options  
 
