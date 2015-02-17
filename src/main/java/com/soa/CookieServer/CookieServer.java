@@ -76,7 +76,7 @@ class AnalyzeService2 extends Service<HttpRequest, HttpResponse> {
         }
 
         // Get data from redis cache, through RedisServer
-        Service<HttpRequest, HttpResponse> client = Http.newService("localhost:8002");
+        Service<HttpRequest, HttpResponse> client = Http.newService(":8002");
         HttpRequest helperRequest = new DefaultHttpRequest(HttpVersion.HTTP_1_1, HttpMethod.POST, "/");
         JSONObject jsonReq = new JSONObject();
         jsonReq.put("key", vizid);
@@ -219,7 +219,7 @@ public class CookieServer {
 
     private void start() {
         HttpMuxer muxService = new HttpMuxer().withHandler("/analyze.php", new AnalyzeService2());
-        ListeningServer server = Http.serve(new InetSocketAddress("localhost", 8000), muxService);
+        ListeningServer server = Http.serve(new InetSocketAddress(8000), muxService);
 
         System.out.println("[CookieServer] Starting..");
         try {

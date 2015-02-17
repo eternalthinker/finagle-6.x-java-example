@@ -18,7 +18,7 @@ public class RedisCache {
     private Client redisClient;
 
     public RedisCache(String host, Integer port) {
-        redisClient = new Client(RedisClient.newClient(host + ":" + port.toString()).toService());
+        redisClient = new Client(RedisClient.newClient(":" + port.toString()).toService());
     }
     
     public Future<Long> sAdd(String key, String value, long ttl) {

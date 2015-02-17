@@ -116,7 +116,7 @@ class CacheService extends Service<HttpRequest, HttpResponse> {
 public class RedisServer {
 
     private void start() {
-        ListeningServer server = Http.serve(new InetSocketAddress("localhost", 8002), new CacheService());
+        ListeningServer server = Http.serve(new InetSocketAddress(8002), new CacheService());
 
         System.out.println("[RedisServer] Starting..");
         try {
